@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="Free Sri Lanka University Course Finder. Find degree and course options based on your A/L stream, Z-Score, district and academic year.">
+
+<title>Sri Lanka University Course Finder</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7fb;
+  color:#172337;
+}
+
+.container{
+  max-width:1080px;
+  margin:auto;
+  padding:25px 16px 50px;
+}
+
+/* HERO */
+
+.hero{
+  background:linear-gradient(135deg,#061a3d,#0868b7);
+  color:#fff;
+  border-radius:25px;
+  padding:45px 25px;
+  text-align:center;
+  margin-bottom:22px;
+  box-shadow:0 15px 40px rgba(3,35,80,.18);
+}
+
+.hero h1{
+  font-size:35px;
+  margin-bottom:12px;
+}
+
+.hero p{
+  max-width:760px;
+  margin:auto;
+  line-height:1.7;
+  font-size:15px;
+  color:#dcecff;
+}
+
+/* CARD */
+
+.card{
+  background:#fff;
+  border-radius:20px;
+  padding:25px;
+  margin-bottom:20px;
+  box-shadow:0 8px 28px rgba(20,50,90,.07);
+}
+
+.card-title{
+  color:#0b3d78;
+  font-size:21px;
+  margin-bottom:20px;
+}
+
+/* FORM */
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:17px;
+}
+
+.field label{
+  display:block;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  padding:14px;
+  border:1px solid #d8e2ed;
+  border-radius:12px;
+  background:#fff;
+  font-size:15px;
+  outline:none;
+}
+
+.field input:focus,
+.field select:focus{
+  border-color:#1470ba;
+  box-shadow:0 0 0 3px rgba(20,112,186,.1);
+}
+
+.find-btn{
+  width:100%;
+  margin-top:20px;
+  border:none;
+  border-radius:13px;
+  padding:16px;
+  background:#0863ad;
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.find-btn:hover{
+  background:#064e8c;
+  transform:translateY(-1px);
+}
+
+/* FILTER INFO */
+
+.search-info{
+  display:none;
+  margin-bottom:20px;
+  padding:14px 16px;
+  background:#eef7ff;
+  border:1px solid #d5eaff;
+  border-radius:12px;
+  color:#31526f;
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* SUMMARY */
+
+.summary{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:25px;
+}
+
+.summary-box{
+  background:#f8fafc;
+  border:1px solid #e4eaf1;
+  border-radius:14px;
+  padding:15px;
+  text-align:center;
+}
+
+.summary-number{
+  font-size:23px;
+  font-weight:800;
+  margin-bottom:5px;
+}
+
+.summary-label{
+  font-size:12px;
+  color:#657286;
+}
+
+.best-number{
+  color:#08763c;
+}
+
+.possible-number{
+  color:#b36b00;
+}
+
+.not-number{
+  color:#c52b2b;
+}
+
+.total-number{
+  color:#145da0;
+}
+
+/* SECTION */
+
+.result-section{
+  margin-top:25px;
+}
+
+.result-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:8px;
+}
+
+.result-heading h3{
+  font-size:20px;
+}
+
+.section-description{
+  color:#69778a;
+  font-size:13px;
+  margin-bottom:14px;
+}
+
+/* COURSE */
+
+.course{
+  background:#fff;
+  border:1px solid #e0e7ef;
+  border-radius:17px;
+  padding:19px;
+  margin-bottom:12px;
+  transition:.2s;
+}
+
+.course:hover{
+  box-shadow:0 7px 22px rgba(20,60,100,.08);
+  border-color:#a6c8e5;
+}
+
+.course-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+
+.course-title{
+  font-size:18px;
+  font-weight:700;
+  color:#123f72;
+  line-height:1.4;
+}
+
+.status{
+  flex-shrink:0;
+  padding:7px 11px;
+  border-radius:30px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.best{
+  background:#e6f8ed;
+  color:#08753c;
+}
+
+.possible{
+  background:#fff4dc;
+  color:#a96400;
+}
+
+.noteligible{
+  background:#ffebeb;
+  color:#b52222;
+}
+
+.course-info{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:15px;
+  color:#5c6b7e;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.course-info strong{
+  color:#344b63;
+}
+
+.z-comparison{
+  margin-top:14px;
+  background:#f6f9fc;
+  border-radius:10px;
+  padding:11px;
+  font-size:13px;
+  color:#526174;
+}
+
+.z-comparison strong{
+  color:#173f68;
+}
+
+/* EMPTY */
+
+.empty{
+  text-align:center;
+  padding:35px 15px;
+  color:#69778a;
+}
+
+.empty strong{
+  display:block;
+  color:#25384d;
+  font-size:18px;
+  margin-bottom:8px;
+}
+
+/* NOTE */
+
+.note{
+  margin-top:20px;
+  background:#f6f9fc;
+  border:1px solid #e3eaf2;
+  border-radius:13px;
+  padding:16px;
+  font-size:13px;
+  color:#637286;
+  line-height:1.7;
+}
+
+/* FOOTER */
+
+.footer{
+  text-align:center;
+  color:#7b8796;
+  font-size:12px;
+  margin-top:25px;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+  .hero{
+    padding:32px 18px;
+  }
+
+  .hero h1{
+    font-size:27px;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .summary{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .course-top{
+    flex-direction:column;
+  }
+
+  .course-info{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:400px){
+
+  .summary{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .card{
+    padding:18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <h1>🎓 Sri Lanka University Course Finder</h1>
+
+    <p>
+      Find university degree and course options based on your
+      A/L Stream, Z-Score, District and Academic Year.
+      Compare your Z-Score with the listed minimum requirement
+      and discover your potential course options.
+    </p>
+
+  </section>
+
+
+  <!-- SEARCH -->
+
+  <section class="card">
+
+    <h2 class="card-title">
+      🔎 Find Your University Course Options
+    </h2>
+
+    <div class="form-grid">
+
+      <div class="field">
+
+        <label for="zscore">
+          Your Z-Score
+        </label>
+
+        <input
+          type="number"
+          id="zscore"
+          step="0.0001"
+          placeholder="Example: 0.0306"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="stream">
+          A/L Stream
+        </label>
+
+        <select id="stream">
+
+          <option value="">
+            Select A/L Stream
+          </option>
+
+          <option value="Physical Science">
+            Physical Science
+          </option>
+
+          <option value="Biological Science">
+            Biological Science
+          </option>
+
+          <option value="Commerce">
+            Commerce
+          </option>
+
+          <option value="Arts">
+            Arts
+          </option>
+
+          <option value="Technology">
+            Technology
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="district">
+          District
+        </label>
+
+        <select id="district">
+
+          <option value="">
+            Select District
+          </option>
+
+          <option>Colombo</option>
+          <option>Gampaha</option>
+          <option>Kalutara</option>
+          <option>Kandy</option>
+          <option>Matale</option>
+          <option>Nuwara Eliya</option>
+          <option>Galle</option>
+          <option>Matara</option>
+          <option>Hambantota</option>
+          <option>Jaffna</option>
+          <option>Kilinochchi</option>
+          <option>Mannar</option>
+          <option>Vavuniya</option>
+          <option>Mullaitivu</option>
+          <option>Batticaloa</option>
+          <option>Ampara</option>
+          <option>Trincomalee</option>
+          <option>Kurunegala</option>
+          <option>Puttalam</option>
+          <option>Anuradhapura</option>
+          <option>Polonnaruwa</option>
+          <option>Badulla</option>
+          <option>Monaragala</option>
+          <option>Ratnapura</option>
+          <option>Kegalle</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="year">
+          Academic Year
+        </label>
+
+        <select id="year">
+
+          <option value="">
+            Select Academic Year
+          </option>
+
+          <option value="2025/2026">
+            2025/2026
+          </option>
+
+          <option value="2024/2025">
+            2024/2025
+          </option>
+
+          <option value="2023/2024">
+            2023/2024
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <button class="find-btn" onclick="findCourses()">
+      🔍 Find Available Courses
+    </button>
+
+  </section>
+
+
+  <!-- RESULTS -->
+
+  <section
+    class="card"
+    id="resultsSection"
+    style="display:none;"
+  >
+
+    <div
+      class="search-info"
+      id="searchInfo">
+    </div>
+
+
+    <div class="summary">
+
+      <div class="summary-box">
+
+        <div
+          class="summary-number best-number"
+          id="bestCount">
+          0
+        </div>
+
+        <div class="summary-label">
+          Best Matches
+        </div>
+
+      </div>
+
+
+      <div class="summary-box">
+
+        <div
+          class="summary-number possible-number"
+          id="possibleCount">
+          0
+        </div>
+
+        <div class="summary-label">
+          Possible Matches
+        </div>
+
+      </div>
+
+
+      <div class="summary-box">
+
+        <div
+          class="summary-number not-number"
+          id="notCount">
+          0
+        </div>
+
+        <div class="summary-label">
+          Below Cut-off
+        </div>
+
+      </div>
+
+
+      <div class="summary-box">
+
+        <div
+          class="summary-number total-number"
+          id="totalCount">
+          0
+        </div>
+
+        <div class="summary-label">
+          Total Courses
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div id="results"></div>
+
+
+    <div class="note">
+
+      <strong>Important:</strong>
+      This tool is provided for educational and guidance
+      purposes. University admission requirements, Z-Score
+      cut-offs and available courses may change from year
+      to year. Always verify the latest information using
+      official UGC and university sources before making
+      an application or decision.
+
+    </div>
+
+  </section>
+
+
+  <div class="footer">
+    Sri Lanka University Course Finder • Educational Tool
+  </div>
+
+</div>
+
+
+<script>
+
+/*
+=========================================================
+SRI LANKA UNIVERSITY COURSE DATABASE
+=========================================================
+
+IMPORTANT:
+The values below are DEMONSTRATION DATA.
+
+Before publishing as an official admission guidance tool,
+replace these records with VERIFIED UGC / official
+university admission data.
+
+districts:
+- studentDistrict = student's district
+- universityDistrict = location of university
+
+districtEligibility:
+- "all" = available for all districts
+- array = available only for listed districts
+
+=========================================================
+*/
+
+const courses = [
+
+  {
+    name:"Bachelor of Science in Computer Science",
+    university:"Sample University",
+    universityDistrict:"Colombo",
+    stream:"Physical Science",
+    minimumZ:0.1000,
+    year:"2025/2026",
+    category:"Computing",
+    districtEligibility:"all"
+  },
+
+  {
+    name:"Bachelor of Information Technology",
+    university:"Sample University",
+    universityDistrict:"Colombo",
+    stream:"Physical Science",
+    minimumZ:-0.0500,
+    year:"2025/2026",
+    category:"Information Technology",
+    districtEligibility:"all"
+  },
+
+  {
+    name:"Bachelor of Science in Mathematics",
+    university:"Sample University",
+    universityDistrict:"Kandy",
+    stream:"Physical Science",
+    minimumZ:-0.1000,
+    year:"2025/2026",
+    category:"Science",
+    districtEligibility:"all"
+  },
+
+  {
+    name:"Bachelor of Science in Physics",
+    university:"Sample University",
+    universityDistrict:"Colombo",
+    stream:"Physical Science",
+    minimumZ:0.2000,
+    year:"2025/2026",
+    category:"Science",
+    districtEligibility:"all"
+  },
+
+  {
+    name:"Bachelor of Science in Biological Sciences",
+    university:"Sample University",
+    universityDistrict:"Kandy",
+    stream:"Biological Science",
+    minimumZ:0.0500,
+    year:"2025/2026",
+    category:"Biological Science",
+    districtEligibility:"all"
+  },
+
+  {
+    name:"Bachelor of Science in Agriculture",
+    university:"Sample University",
+    universityDistrict:"Anuradhapura",
+    stream:"Biological Science",
+    minimumZ:-0.2000,
+    year:"2025/2026",
+    category:"Agriculture",
+    districtEligibility:"all"
+  },
+
+  {
+    name:"Bachelor of Business Management",
+    university:"Sample University",
+    universityDistrict:"Colombo",
+    stream:"Commerce",
+    minimumZ:-0.1000,
+    year:"2025/2026",
+    category:"Business",
+    districtEligibility:"all"
+  },
+
+  {
+    name:"Bachelor of Commerce",
+    university:"Sample University",
+    universityDistrict:"Kandy",
+    stream:"Commerce",
+    minimumZ:-0.0500,
+    year:"2025/2026",
+    category:"Commerce",
+    districtEligibility:"all"
+  },
+
+  {
+    name:"Bachelor of Arts",
+    university:"Sample University",
+    universityDistrict:"Colombo",
+    stream:"Arts",
+    minimumZ:-0.5000,
+    year:"2025/2026",
+    category:"Arts",
+    districtEligibility:"all"
+  },
+
+  {
+    name:"Bachelor of Information and Communication Technology",
+    university:"Sample University",
+    universityDistrict:"Colombo",
+    stream:"Technology",
+    minimumZ:-0.1500,
+    year:"2025/2026",
+    category:"Technology",
+    districtEligibility:"all"
+  },
+
+  {
+    name:"Bachelor of Engineering Technology",
+    university:"Sample University",
+    universityDistrict:"Gampaha",
+    stream:"Technology",
+    minimumZ:0.0500,
+    year:"2025/2026",
+    category:"Engineering Technology",
+    districtEligibility:"all"
+  },
+
+  {
+    name:"Bachelor of Industrial Information Technology",
+    university:"Sample University",
+    universityDistrict:"Colombo",
+    stream:"Technology",
+    minimumZ:-0.0500,
+    year:"2025/2026",
+    category:"Information Technology",
+    districtEligibility:"all"
+  }
+
+];
+
+
+/*
+=========================================================
+FIND COURSES
+=========================================================
+*/
+
+function findCourses(){
+
+  const z = parseFloat(
+    document.getElementById("zscore").value
+  );
+
+  const stream =
+    document.getElementById("stream").value;
+
+  const district =
+    document.getElementById("district").value;
+
+  const year =
+    document.getElementById("year").value;
+
+
+  if(
+    isNaN(z) ||
+    !stream ||
+    !district ||
+    !year
+  ){
+
+    alert(
+      "Please enter your Z-Score and select your A/L Stream, District and Academic Year."
+    );
+
+    return;
+  }
+
+
+  /*
+  -------------------------------------------------------
+  FILTER COURSES
+
+  1. A/L Stream
+  2. Academic Year
+  3. District eligibility
+  -------------------------------------------------------
+  */
+
+  const matchedCourses = courses.filter(course => {
+
+    const streamMatch =
+      course.stream === stream;
+
+    const yearMatch =
+      course.year === year;
+
+    const districtMatch =
+      course.districtEligibility === "all" ||
+      course.districtEligibility.includes(district);
+
+    return (
+      streamMatch &&
+      yearMatch &&
+      districtMatch
+    );
+
+  });
+
+
+  let best = [];
+  let possible = [];
+  let notEligible = [];
+
+
+  /*
+  -------------------------------------------------------
+  CLASSIFY RESULTS
+  -------------------------------------------------------
+
+  BEST:
+  Z-score is 0.1000 or more above minimum.
+
+  POSSIBLE:
+  Z-score meets minimum but is less than 0.1000 above it.
+
+  BELOW CUT-OFF:
+  Z-score is below minimum.
+
+  -------------------------------------------------------
+  */
+
+  matchedCourses.forEach(course => {
+
+    const difference =
+      z - course.minimumZ;
+
+
+    if(difference >= 0.1000){
+
+      best.push({
+        ...course,
+        status:"best",
+        difference:difference
+      });
+
+    }
+
+    else if(difference >= 0){
+
+      possible.push({
+        ...course,
+        status:"possible",
+        difference:difference
+      });
+
+    }
+
+    else{
+
+      notEligible.push({
+        ...course,
+        status:"noteligible",
+        difference:difference
+      });
+
+    }
+
+  });
+
+
+  /*
+  SORT RESULTS
+  */
+
+  best.sort(
+    (a,b) => b.difference - a.difference
+  );
+
+  possible.sort(
+    (a,b) => b.difference - a.difference
+  );
+
+  notEligible.sort(
+    (a,b) => b.minimumZ - a.minimumZ
+  );
+
+
+  const allResults = [
+    ...best,
+    ...possible,
+    ...notEligible
+  ];
+
+
+  /*
+  SHOW RESULTS
+  */
+
+  document.getElementById("resultsSection")
+    .style.display = "block";
+
+
+  document.getElementById("bestCount")
+    .textContent = best.length;
+
+  document.getElementById("possibleCount")
+    .textContent = possible.length;
+
+  document.getElementById("notCount")
+    .textContent = notEligible.length;
+
+  document.getElementById("totalCount")
+    .textContent = allResults.length;
+
+
+  /*
+  SEARCH INFORMATION
+  */
+
+  const searchInfo =
+    document.getElementById("searchInfo");
+
+  searchInfo.style.display = "block";
+
+  searchInfo.innerHTML = `
+    <strong>Search:</strong>
+    Z-Score ${z.toFixed(4)}
+    • ${stream}
+    • ${district} District
+    • Academic Year ${year}
+  `;
+
+
+  const results =
+    document.getElementById("results");
+
+
+  /*
+  NO RESULTS
+  */
+
+  if(allResults.length === 0){
+
+    results.innerHTML = `
+
+      <div class="empty">
+
+        <strong>No Course Data Found</strong>
+
+        There are currently no courses in the database
+        matching your selected A/L Stream, District and
+        Academic Year.
+
+      </div>
+
+    `;
+
+    document.getElementById("resultsSection")
+      .scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+
+    return;
+  }
+
+
+  results.innerHTML = "";
+
+
+  /*
+  ======================================================
+  BEST MATCHES
+  ======================================================
+  */
+
+  if(best.length > 0){
+
+    results.innerHTML += `
+
+      <div class="result-section">
+
+        <div class="result-heading">
+
+          <h3>🟢 Best Matches</h3>
+
+        </div>
+
+        <p class="section-description">
+          Your Z-Score is comfortably above the
+          listed minimum Z-Score for these courses.
+        </p>
+
+        ${best.map(courseCard).join("")}
+
+      </div>
+
+    `;
+
+  }
+
+
+  /*
+  ======================================================
+  POSSIBLE MATCHES
+  ======================================================
+  */
+
+  if(possible.length > 0){
+
+    results.innerHTML += `
+
+      <div class="result-section">
+
+        <div class="result-heading">
+
+          <h3>🟡 Possible Matches</h3>
+
+        </div>
+
+        <p class="section-description">
+          Your Z-Score meets the listed minimum,
+          but the difference is relatively small.
+        </p>
+
+        ${possible.map(courseCard).join("")}
+
+      </div>
+
+    `;
+
+  }
+
+
+  /*
+  ======================================================
+  BELOW CUT-OFF
+  ======================================================
+  */
+
+  if(notEligible.length > 0){
+
+    results.innerHTML += `
+
+      <div class="result-section">
+
+        <div class="result-heading">
+
+          <h3>🔴 Below Listed Cut-off</h3>
+
+        </div>
+
+        <p class="section-description">
+          Your Z-Score is below the listed minimum
+          Z-Score requirement for these courses.
+        </p>
+
+        ${notEligible.map(courseCard).join("")}
+
+      </div>
+
+    `;
+
+  }
+
+
+  /*
+  SCROLL TO RESULTS
+  */
+
+  document.getElementById("resultsSection")
+    .scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+}
+
+
+/*
+=========================================================
+COURSE CARD
+=========================================================
+*/
+
+function courseCard(course){
+
+  let statusText = "";
+  let statusClass = "";
+
+
+  if(course.status === "best"){
+
+    statusText = "BEST MATCH";
+    statusClass = "best";
+
+  }
+
+  else if(course.status === "possible"){
+
+    statusText = "POSSIBLE";
+    statusClass = "possible";
+
+  }
+
+  else{
+
+    statusText = "BELOW CUT-OFF";
+    statusClass = "noteligible";
+
+  }
+
+
+  const difference =
+    course.difference >= 0
+    ? "+" + course.difference.toFixed(4)
+    : course.difference.toFixed(4);
+
+
+  const userZ =
+    document.getElementById("zscore").value;
+
+
+  return `
+
+    <div class="course">
+
+      <div class="course-top">
+
+        <div class="course-title">
+          🎓 ${course.name}
+        </div>
+
+        <span class="status ${statusClass}">
+          ${statusText}
+        </span>
+
+      </div>
+
+
+      <div class="course-info">
+
+        <div>
+          🏫 <strong>University:</strong>
+          ${course.university}
+        </div>
+
+        <div>
+          📍 <strong>University Location:</strong>
+          ${course.universityDistrict}
+        </div>
+
+        <div>
+          📚 <strong>Field:</strong>
+          ${course.category}
+        </div>
+
+        <div>
+          📅 <strong>Academic Year:</strong>
+          ${course.year}
+        </div>
+
+        <div>
+          📊 <strong>Minimum Z-Score:</strong>
+          ${course.minimumZ.toFixed(4)}
+        </div>
+
+        <div>
+          🎯 <strong>Your Z-Score:</strong>
+          ${userZ}
+        </div>
+
+      </div>
+
+
+      <div class="z-comparison">
+
+        Z-Score Difference:
+        <strong>${difference}</strong>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+</script>
+
+</body>
+</html>
